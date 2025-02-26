@@ -28,20 +28,15 @@ OR
 2) Install `requests` module [if you don't have it](https://pypi.org/project/requests/)  
    * Windows:    ```python -m pip install requests```  
    * Linux:      ```python3.8 -m pip install requests```
-3) Create `config.py` file in the same directory as `twitch-recorder.py` with:
-```properties
-root_path = "/home/abathur/Videos/twitch"
-username = "forsen"
-client_id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-client_secret = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"
-```
-`root_path` - path to a folder where you want your VODs to be saved to  
-`username` - name of the streamer you want to record by default  
-`client_id` - you can grab this from [here](https://dev.twitch.tv/console/apps) once you register your application  
-`client_secret` - you generate this [here](https://dev.twitch.tv/console/apps) as well, for your registered application
+3) Create `config.py` file: `cp config.py.example config.py`
+   `root_path` - path to a folder where you want your VODs to be saved to  
+   `username` - name of the streamer you want to record by default  
+   `client_id` - you can grab this from [here](https://dev.twitch.tv/console/apps) once you register your application  
+   `client_secret` - you generate this [here](https://dev.twitch.tv/console/apps) as well, for your registered application
 
 ## Running script
 The script will be logging to a console and to a file `twitch-recorder.log`
+
 ### On linux
 Run the script
 ```shell script

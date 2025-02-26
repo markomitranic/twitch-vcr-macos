@@ -8,9 +8,7 @@ import sys
 import shutil
 import time
 import signal
-
 import requests
-
 import config
 
 
@@ -28,7 +26,8 @@ class TwitchRecorder:
         self.ffmpeg_path = "ffmpeg"
         self.disable_ffmpeg = False
         self.refresh = 60
-        self.root_path = config.root_path
+        # Use the current directory where the app is running instead of config
+        self.root_path = os.path.dirname(os.path.abspath(__file__))
 
         # user configuration
         self.username = config.username
@@ -56,7 +55,7 @@ class TwitchRecorder:
 
     def run(self):
         # path to recorded stream
-        recorded_path = os.path.join(self.root_path, "recorded", self.username)
+        recorded_path = os.path.join(self.root_path, "recordings", self.username)
         # path to finished video, errors removed
         processed_path = os.path.join(self.root_path, "processed", self.username)
 

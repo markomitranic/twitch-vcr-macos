@@ -85,3 +85,34 @@ You can run the scipt from `cmd` or [terminal](https://www.microsoft.com/en-us/p
 python twitch-recorder.py
 ```
 The optional parameters should work exactly the same as on Linux.
+
+## macOS Integration
+
+### Using the TwitchRecorder.app
+On macOS, you can use the TwitchRecorder.app to launch the script like a native macOS application. This allows you to:
+1. Launch the recorder by double-clicking the app icon
+2. See the app in your Dock while it's running
+3. Easily stop the recorder by closing the app's dialog window
+
+### Recompiling the TwitchRecorder.app
+If you make changes to the AppleScript or need to recreate the app, follow these steps:
+
+1. Edit the `TwitchRecorder.applescript` file if needed
+2. Open Terminal and navigate to the directory containing the files:
+   ```
+   cd /path/to/your/twitch/recorder/directory
+   ```
+3. Compile the AppleScript into an application:
+   ```
+   osacompile -o TwitchRecorder.app TwitchRecorder.applescript
+   ```
+4. If you want to use a custom icon, copy it to the app bundle:
+   ```
+   cp your-icon-file.icns TwitchRecorder.app/Contents/Resources/applet.icns
+   ```
+5. To make the app work with Gatekeeper on newer macOS versions, you may need to codesign it (optional):
+   ```
+   codesign --force --deep --sign - TwitchRecorder.app
+   ```
+
+The compiled app can be moved to your Applications folder or kept in the same directory as the script.

@@ -111,3 +111,12 @@ If you make changes to the AppleScript or need to recreate the app, follow these
    ```
 
 The compiled app can be moved to your Applications folder or kept in the same directory as the script.
+
+P.S. You can convert it into mp3 with:
+```bash
+ffmpeg -i "/Users/markomitranic/Sites/twitch-vcr-macos/processed/vinyljunkies/vinyljunkies - 2025-03-03 21h12m13s - METAL MÖNDAY HEAVY VINYL SPINS ALL DAY   11k LPS   Music Talk  socialradio  BROADCAST 1667.mp4" -q:a 0 -map a "output.mp3"
+
+# Crop the mp3
+ffmpeg -i "output.mp3" -ss 02:13:00 -acodec copy "output_trimmed.mp3"
+```
+

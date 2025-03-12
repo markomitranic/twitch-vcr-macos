@@ -180,8 +180,8 @@ class TwitchRecorder:
 
                     channels = info["data"]
                     channel = next(iter(channels), None)
-                    filename = self.username + " - " + datetime.datetime.now() \
-                        .strftime("%Y-%m-%d %Hh%Mm%Ss") + " - " + channel.get("title") + ".mp4"
+                    now = datetime.datetime.now()
+                    filename = now.strftime("%Y-%m-%d - %A - ") + channel.get("title") + ".mp4"
 
                     # clean filename from unnecessary characters
                     filename = "".join(x for x in filename if x.isalnum() or x in [" ", "-", "_", "."])

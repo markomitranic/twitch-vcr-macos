@@ -45,6 +45,7 @@ class TwitchRecorder:
         self.current_process = None
         self.recorded_filename = None
         self.processed_filename = None
+        self.audio_filename = None
         self.is_recording = False
 
     def fetch_access_token(self):
@@ -94,6 +95,10 @@ class TwitchRecorder:
         else:
             logging.info("fixing %s", recorded_filename)
             self.ffmpeg_copy_and_fix_errors(recorded_filename, processed_filename)
+            
+        # Extract MP3 after processing the video
+        if os.path.exists(processed_filename):
+            self.audio_filename = self.extract_mp3(processed_filename)
 
     def ffmpeg_copy_and_fix_errors(self, recorded_filename, processed_filename):
         try:
@@ -211,6 +216,7 @@ class TwitchRecorder:
                     self.current_process = None
                     self.recorded_filename = None
                     self.processed_filename = None
+                    self.audio_filename = None
 
                     logging.info("processing is done, going back to checking...")
                     time.sleep(self.refresh)
@@ -218,6 +224,33 @@ class TwitchRecorder:
                 logging.info("KeyboardInterrupt received, shutting down gracefully...")
                 self.graceful_shutdown()
                 sys.exit(0)
+
+    def extract_mp3(self, video_path):
+        """Extract MP3 audio from the processed video file"""
+        if self.disable_ffmpeg:
+            logging.info("ffmpeg disabled, skipping MP3 extraction")
+            return None
+            
+        try:
+            # Generate audio filename in the same directory as the video
+            audio_filename = os.path.splitext(video_path)[0] + ".mp3"
+            
+            logging.info("Extracting MP3 from video: %s", video_path)
+            subprocess.call([
+                self.ffmpeg_path,
+                "-i", video_path,
+                "-q:a", "0",
+                "-map", "a",
+                audio_filename
+            ])
+            
+            if os.path.exists(audio_filename):
+                logging.info("MP3 extraction complete: %s", audio_filename)
+                return audio_filename
+            return None
+        except Exception as e:
+            logging.error("Error extracting MP3: %s", e)
+            return None
 
 
 def signal_handler(sig, frame):

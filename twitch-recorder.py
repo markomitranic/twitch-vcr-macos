@@ -30,7 +30,7 @@ class TwitchRecorder:
         self.root_path = os.path.dirname(os.path.abspath(__file__))
 
         # user configuration
-        self.username = config.username
+        self.username = None  # Will be set via CLI
         self.quality = "best"
 
         # twitch configuration
@@ -294,6 +294,12 @@ def main(argv):
         elif opt == "--disable-ffmpeg":
             recorder.disable_ffmpeg = True
             logging.info("ffmpeg disabled")
+
+    # Validate that username was provided
+    if not recorder.username:
+        print("Error: Username is required. Use -u or --username to specify the Twitch username.")
+        print(usage_message)
+        sys.exit(1)
 
     recorder.run()
 
